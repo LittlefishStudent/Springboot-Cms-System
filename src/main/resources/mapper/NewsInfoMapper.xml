@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tech.dao.NewsInfoMapper">
+  <resultMap id="BaseResultMap" type="com.tech.model.NewsInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="title" property="title" jdbcType="VARCHAR" />
+  <result column="news_type_id" property="newsTypeId" jdbcType="INTEGER" />
+  <result column="news_img" property="newsImg" jdbcType="VARCHAR" />
+  <result column="content" property="content" jdbcType="VARCHAR" />
+  <result column="publish_name" property="publishName" jdbcType="VARCHAR" />
+  <result column="publish_date" property="publishDate" jdbcType="VARCHAR" />
+  <result column="view_num" property="viewNum" jdbcType="INTEGER" />
+
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+     id,title,news_type_id,news_img,content,publish_name,publish_date,view_num
+  </sql>
+<!-- 根据Newsinfo表   -->
+  <select id="selectByExample" parameterType="com.tech.model.NewsInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from news_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+     <if test="startRow >= 0 and pageRows > 0">
+  limit ${startRow},${pageRows}
+  </if>
+
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+     from news_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+   delete from news_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tech.model.NewsInfoExample">
+    delete from news_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tech.model.NewsInfo">
+      <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+  SELECT LAST_INSERT_ID()
+</selectKey>
+
+      insert into news_info (title,news_type_id,news_img,content,publish_name,publish_date,view_num)
+      values (	#{id,jdbcType=INTEGER},	#{title,jdbcType=VARCHAR},	#{newsTypeId,jdbcType=INTEGER},	#{newsImg,jdbcType=VARCHAR},	#{content,jdbcType=VARCHAR},	#{publishName,jdbcType=VARCHAR},	#{publishDate,jdbcType=VARCHAR},	#{viewNum,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tech.model.NewsInfo">
+   <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+  SELECT LAST_INSERT_ID()
+</selectKey>
+
+    insert into news_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null" >
+	  id,
+ </if>
+<if test="title != null" >
+	  title,
+ </if>
+<if test="newsTypeId != null" >
+	  news_type_id,
+ </if>
+<if test="newsImg != null" >
+	  news_img,
+ </if>
+<if test="content != null" >
+	  content,
+ </if>
+<if test="publishName != null" >
+	  publish_name,
+ </if>
+<if test="publishDate != null" >
+	  publish_date,
+ </if>
+<if test="viewNum != null" >
+	  view_num
+ </if>
+
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+         <if test="id != null" >
+	 #{id,jdbcType=INTEGER},
+	 </if>
+  <if test="title != null" >
+	 #{title,jdbcType=VARCHAR},
+	 </if>
+  <if test="newsTypeId != null" >
+	 #{newsTypeId,jdbcType=INTEGER},
+	 </if>
+  <if test="newsImg != null" >
+	 #{newsImg,jdbcType=VARCHAR},
+	 </if>
+  <if test="content != null" >
+	 #{content,jdbcType=VARCHAR},
+	 </if>
+  <if test="publishName != null" >
+	 #{publishName,jdbcType=VARCHAR},
+	 </if>
+  <if test="publishDate != null" >
+	 #{publishDate,jdbcType=VARCHAR},
+	 </if>
+  <if test="viewNum != null" >
+	 #{viewNum,jdbcType=INTEGER},
+	 </if>
+
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tech.model.NewsInfoExample" resultType="java.lang.Long">
+    select count(*) from news_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update news_info
+    <set>
+       <if test="record.title != null" >
+	 title = #{record.title,jdbcType=VARCHAR},
+</if>
+ <if test="record.newsTypeId != null" >
+	 news_type_id = #{record.newsTypeId,jdbcType=INTEGER},
+</if>
+ <if test="record.newsImg != null" >
+	 news_img = #{record.newsImg,jdbcType=VARCHAR},
+</if>
+ <if test="record.content != null" >
+	 content = #{record.content,jdbcType=VARCHAR},
+</if>
+ <if test="record.publishName != null" >
+	 publish_name = #{record.publishName,jdbcType=VARCHAR},
+</if>
+ <if test="record.publishDate != null" >
+	 publish_date = #{record.publishDate,jdbcType=VARCHAR},
+</if>
+ <if test="record.viewNum != null" >
+	 view_num = #{record.viewNum,jdbcType=INTEGER}
+</if>
+
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update news_info
+    set 
+    				title = #{record.title,jdbcType=VARCHAR},	news_type_id = #{record.newsTypeId,jdbcType=INTEGER},	news_img = #{record.newsImg,jdbcType=VARCHAR},	content = #{record.content,jdbcType=VARCHAR},	publish_name = #{record.publishName,jdbcType=VARCHAR},	publish_date = #{record.publishDate,jdbcType=VARCHAR},	view_num = #{record.viewNum,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tech.model.NewsInfo">
+    update news_info
+    <set>
+       <if test="title != null" >
+	 title = #{title,jdbcType=VARCHAR},
+</if>
+ <if test="newsTypeId != null" >
+	 news_type_id = #{newsTypeId,jdbcType=INTEGER},
+</if>
+ <if test="newsImg != null" >
+	 news_img = #{newsImg,jdbcType=VARCHAR},
+</if>
+ <if test="content != null" >
+	 content = #{content,jdbcType=VARCHAR},
+</if>
+ <if test="publishName != null" >
+	 publish_name = #{publishName,jdbcType=VARCHAR},
+</if>
+ <if test="publishDate != null" >
+	 publish_date = #{publishDate,jdbcType=VARCHAR},
+</if>
+ <if test="viewNum != null" >
+	 view_num = #{viewNum,jdbcType=INTEGER}
+</if>
+
+    </set>
+     where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tech.model.NewsInfo">
+    update news_info
+    set 
+     			title = #{title,jdbcType=VARCHAR},	news_type_id = #{newsTypeId,jdbcType=INTEGER},	news_img = #{newsImg,jdbcType=VARCHAR},	content = #{content,jdbcType=VARCHAR},	publish_name = #{publishName,jdbcType=VARCHAR},	publish_date = #{publishDate,jdbcType=VARCHAR},	view_num = #{viewNum,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+</mapper>

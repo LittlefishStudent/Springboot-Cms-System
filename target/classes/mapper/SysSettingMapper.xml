@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tech.dao.SysSettingMapper">
+  <resultMap id="BaseResultMap" type="com.tech.model.SysSetting">
+    <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="sys_title" property="sysTitle" jdbcType="VARCHAR" />
+  <result column="sys_intro" property="sysIntro" jdbcType="VARCHAR" />
+  <result column="company_name" property="companyName" jdbcType="VARCHAR" />
+  <result column="company_address" property="companyAddress" jdbcType="VARCHAR" />
+  <result column="company_lat" property="companyLat" jdbcType="VARCHAR" />
+  <result column="company_lng" property="companyLng" jdbcType="VARCHAR" />
+  <result column="wetchat_img" property="wetchatImg" jdbcType="VARCHAR" />
+  <result column="sq_tel" property="sqTel" jdbcType="VARCHAR" />
+  <result column="sh_tel" property="shTel" jdbcType="VARCHAR" />
+  <result column="contact_tel" property="contactTel" jdbcType="VARCHAR" />
+  <result column="qq_val" property="qqVal" jdbcType="VARCHAR" />
+  <result column="email" property="email" jdbcType="VARCHAR" />
+  <result column="beian_no" property="beianNo" jdbcType="VARCHAR" />
+
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+     id,sys_title,sys_intro,company_name,company_address,company_lat,company_lng,wetchat_img,sq_tel,sh_tel,contact_tel,qq_val,email,beian_no
+  </sql>
+  <select id="selectByExample" parameterType="com.tech.model.SysSettingExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sys_setting
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+     <if test="startRow >= 0 and pageRows > 0">
+  limit ${startRow},${pageRows}
+  </if>
+
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+     from sys_setting
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+   delete from sys_setting
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tech.model.SysSettingExample">
+    delete from sys_setting
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tech.model.SysSetting">
+      <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+  SELECT LAST_INSERT_ID()
+</selectKey>
+
+      insert into sys_setting (sys_title,sys_intro,company_name,company_address,company_lat,company_lng,wetchat_img,sq_tel,sh_tel,contact_tel,qq_val,email,beian_no)
+      values (	#{id,jdbcType=INTEGER},	#{sysTitle,jdbcType=VARCHAR},	#{sysIntro,jdbcType=VARCHAR},	#{companyName,jdbcType=VARCHAR},	#{companyAddress,jdbcType=VARCHAR},	#{companyLat,jdbcType=VARCHAR},	#{companyLng,jdbcType=VARCHAR},	#{wetchatImg,jdbcType=VARCHAR},	#{sqTel,jdbcType=VARCHAR},	#{shTel,jdbcType=VARCHAR},	#{contactTel,jdbcType=VARCHAR},	#{qqVal,jdbcType=VARCHAR},	#{email,jdbcType=VARCHAR},	#{beianNo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tech.model.SysSetting">
+   <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+  SELECT LAST_INSERT_ID()
+</selectKey>
+
+    insert into sys_setting
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null" >
+	  id,
+ </if>
+<if test="sysTitle != null" >
+	  sys_title,
+ </if>
+<if test="sysIntro != null" >
+	  sys_intro,
+ </if>
+<if test="companyName != null" >
+	  company_name,
+ </if>
+<if test="companyAddress != null" >
+	  company_address,
+ </if>
+<if test="companyLat != null" >
+	  company_lat,
+ </if>
+<if test="companyLng != null" >
+	  company_lng,
+ </if>
+<if test="wetchatImg != null" >
+	  wetchat_img,
+ </if>
+<if test="sqTel != null" >
+	  sq_tel,
+ </if>
+<if test="shTel != null" >
+	  sh_tel,
+ </if>
+<if test="contactTel != null" >
+	  contact_tel,
+ </if>
+<if test="qqVal != null" >
+	  qq_val,
+ </if>
+<if test="email != null" >
+	  email,
+ </if>
+<if test="beianNo != null" >
+	  beian_no
+ </if>
+
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+         <if test="id != null" >
+	 #{id,jdbcType=INTEGER},
+	 </if>
+  <if test="sysTitle != null" >
+	 #{sysTitle,jdbcType=VARCHAR},
+	 </if>
+  <if test="sysIntro != null" >
+	 #{sysIntro,jdbcType=VARCHAR},
+	 </if>
+  <if test="companyName != null" >
+	 #{companyName,jdbcType=VARCHAR},
+	 </if>
+  <if test="companyAddress != null" >
+	 #{companyAddress,jdbcType=VARCHAR},
+	 </if>
+  <if test="companyLat != null" >
+	 #{companyLat,jdbcType=VARCHAR},
+	 </if>
+  <if test="companyLng != null" >
+	 #{companyLng,jdbcType=VARCHAR},
+	 </if>
+  <if test="wetchatImg != null" >
+	 #{wetchatImg,jdbcType=VARCHAR},
+	 </if>
+  <if test="sqTel != null" >
+	 #{sqTel,jdbcType=VARCHAR},
+	 </if>
+  <if test="shTel != null" >
+	 #{shTel,jdbcType=VARCHAR},
+	 </if>
+  <if test="contactTel != null" >
+	 #{contactTel,jdbcType=VARCHAR},
+	 </if>
+  <if test="qqVal != null" >
+	 #{qqVal,jdbcType=VARCHAR},
+	 </if>
+  <if test="email != null" >
+	 #{email,jdbcType=VARCHAR},
+	 </if>
+  <if test="beianNo != null" >
+	 #{beianNo,jdbcType=VARCHAR},
+	 </if>
+
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tech.model.SysSettingExample" resultType="java.lang.Long">
+    select count(*) from sys_setting
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sys_setting
+    <set>
+       <if test="record.sysTitle != null" >
+	 sys_title = #{record.sysTitle,jdbcType=VARCHAR},
+</if>
+ <if test="record.sysIntro != null" >
+	 sys_intro = #{record.sysIntro,jdbcType=VARCHAR},
+</if>
+ <if test="record.companyName != null" >
+	 company_name = #{record.companyName,jdbcType=VARCHAR},
+</if>
+ <if test="record.companyAddress != null" >
+	 company_address = #{record.companyAddress,jdbcType=VARCHAR},
+</if>
+ <if test="record.companyLat != null" >
+	 company_lat = #{record.companyLat,jdbcType=VARCHAR},
+</if>
+ <if test="record.companyLng != null" >
+	 company_lng = #{record.companyLng,jdbcType=VARCHAR},
+</if>
+ <if test="record.wetchatImg != null" >
+	 wetchat_img = #{record.wetchatImg,jdbcType=VARCHAR},
+</if>
+ <if test="record.sqTel != null" >
+	 sq_tel = #{record.sqTel,jdbcType=VARCHAR},
+</if>
+ <if test="record.shTel != null" >
+	 sh_tel = #{record.shTel,jdbcType=VARCHAR},
+</if>
+ <if test="record.contactTel != null" >
+	 contact_tel = #{record.contactTel,jdbcType=VARCHAR},
+</if>
+ <if test="record.qqVal != null" >
+	 qq_val = #{record.qqVal,jdbcType=VARCHAR},
+</if>
+ <if test="record.email != null" >
+	 email = #{record.email,jdbcType=VARCHAR},
+</if>
+ <if test="record.beianNo != null" >
+	 beian_no = #{record.beianNo,jdbcType=VARCHAR}
+</if>
+
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sys_setting
+    set 
+    				sys_title = #{record.sysTitle,jdbcType=VARCHAR},	sys_intro = #{record.sysIntro,jdbcType=VARCHAR},	company_name = #{record.companyName,jdbcType=VARCHAR},	company_address = #{record.companyAddress,jdbcType=VARCHAR},	company_lat = #{record.companyLat,jdbcType=VARCHAR},	company_lng = #{record.companyLng,jdbcType=VARCHAR},	wetchat_img = #{record.wetchatImg,jdbcType=VARCHAR},	sq_tel = #{record.sqTel,jdbcType=VARCHAR},	sh_tel = #{record.shTel,jdbcType=VARCHAR},	contact_tel = #{record.contactTel,jdbcType=VARCHAR},	qq_val = #{record.qqVal,jdbcType=VARCHAR},	email = #{record.email,jdbcType=VARCHAR},	beian_no = #{record.beianNo,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tech.model.SysSetting">
+    update sys_setting
+    <set>
+       <if test="sysTitle != null" >
+	 sys_title = #{sysTitle,jdbcType=VARCHAR},
+</if>
+ <if test="sysIntro != null" >
+	 sys_intro = #{sysIntro,jdbcType=VARCHAR},
+</if>
+ <if test="companyName != null" >
+	 company_name = #{companyName,jdbcType=VARCHAR},
+</if>
+ <if test="companyAddress != null" >
+	 company_address = #{companyAddress,jdbcType=VARCHAR},
+</if>
+ <if test="companyLat != null" >
+	 company_lat = #{companyLat,jdbcType=VARCHAR},
+</if>
+ <if test="companyLng != null" >
+	 company_lng = #{companyLng,jdbcType=VARCHAR},
+</if>
+ <if test="wetchatImg != null" >
+	 wetchat_img = #{wetchatImg,jdbcType=VARCHAR},
+</if>
+ <if test="sqTel != null" >
+	 sq_tel = #{sqTel,jdbcType=VARCHAR},
+</if>
+ <if test="shTel != null" >
+	 sh_tel = #{shTel,jdbcType=VARCHAR},
+</if>
+ <if test="contactTel != null" >
+	 contact_tel = #{contactTel,jdbcType=VARCHAR},
+</if>
+ <if test="qqVal != null" >
+	 qq_val = #{qqVal,jdbcType=VARCHAR},
+</if>
+ <if test="email != null" >
+	 email = #{email,jdbcType=VARCHAR},
+</if>
+ <if test="beianNo != null" >
+	 beian_no = #{beianNo,jdbcType=VARCHAR}
+</if>
+
+    </set>
+     where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tech.model.SysSetting">
+    update sys_setting
+    set 
+     			sys_title = #{sysTitle,jdbcType=VARCHAR},	sys_intro = #{sysIntro,jdbcType=VARCHAR},	company_name = #{companyName,jdbcType=VARCHAR},	company_address = #{companyAddress,jdbcType=VARCHAR},	company_lat = #{companyLat,jdbcType=VARCHAR},	company_lng = #{companyLng,jdbcType=VARCHAR},	wetchat_img = #{wetchatImg,jdbcType=VARCHAR},	sq_tel = #{sqTel,jdbcType=VARCHAR},	sh_tel = #{shTel,jdbcType=VARCHAR},	contact_tel = #{contactTel,jdbcType=VARCHAR},	qq_val = #{qqVal,jdbcType=VARCHAR},	email = #{email,jdbcType=VARCHAR},	beian_no = #{beianNo,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+</mapper>
