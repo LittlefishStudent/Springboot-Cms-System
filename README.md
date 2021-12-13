@@ -42,18 +42,16 @@ https://user-images.githubusercontent.com/57835580/145515659-725b7bf3-5cf7-4692-
 
 ## 总体设计
 本项目用到的技术和框架
-1.项目构建：Maven
-2.web框架：Springboot
-3.数据库ORM：Mybatis
-4.数据库连接池： Druid
-5.分页插件：PageHelper
-6.数据库：MySql5.7
-7.缓存：Redis
-8.前端模板：LAYUI-Html5
+1. 项目构建：Maven
+2. web框架：Springboot
+3. 数据库ORM：Mybatis
+4. 数据库：MySql5.7
+5. 缓存：Redis
+6. 前端模板：LAYUI-Html5
 
-本项目中的关键点
-1.采用Springboot开发，数据库使用连接池加orm框架的模式
-2.整体系统采用企业+后台管理+后台内容管理系统的方式搭建，门户网站展示企业产品内容以及企业介绍，后台管理用于编辑新闻，发布产品。
+- 本项目中的关键点
+1. 采用Springboot开发，数据库使用连接池加orm框架的模式
+2. 整体系统采用企业+后台管理+后台内容管理系统的方式搭建，门户网站展示企业产品内容以及企业介绍，后台管理用于编辑新闻，发布产品。
 
 
 
