@@ -41,7 +41,7 @@ https://user-images.githubusercontent.com/57835580/145515659-725b7bf3-5cf7-4692-
 ![image](https://user-images.githubusercontent.com/57835580/145516679-190db9f6-4918-4d40-8c00-5dda37d97f6d.png)
 
 ## 总体设计
-本项目用到的技术和框架
+- 本项目用到的技术和框架
 1. 项目构建：Maven
 2. web框架：Springboot
 3. 数据库ORM：Mybatis
